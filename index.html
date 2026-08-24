@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+  <title>Thiệp Mời Tốt Nghiệp · Kim Hồng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #d4c9b0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      padding: 20px;
+      background-image: radial-gradient(circle at 20% 30%, #e8dfcc 0%, #c8bca4 100%);
+      position: relative;
+    }
+
+    /* === MÀN HÌNH NHẬP TÊN === */
+    .name-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(27, 38, 59, 0.92);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 20px;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .name-modal {
+      background: #fcf8f0;
+      max-width: 440px;
+      width: 100%;
+      padding: 2.8rem 2.2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+      border: 3px solid #2c241a;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .name-modal-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(145deg, #1B263B, #2c3e50);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 1rem;
+      color: #A8DADC;
+      font-size: 2.4rem;
+      border: 3px solid #A8DADC;
+    }
+
+    .name-modal h2 {
+      color: #1B263B;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .name-modal p {
+      color: #5a4d3d;
+      font-size: 0.95rem;
+      margin-bottom: 1.8rem;
+      opacity: 0.8;
+    }
+
+    .name-input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+    }
+
+    .name-input-group input {
+      flex: 1;
+      padding: 0.9rem 1.2rem;
+      border: 2px solid #d4c5b0;
+      border-radius: 60px;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: all 0.3s;
+      background: white;
+    }
+
+    .name-input-group input:focus {
+      border-color: #1B263B;
+      box-shadow: 0 0 0 4px rgba(27, 38, 59, 0.08);
+    }
+
+    .name-input-group button {
+      padding: 0.9rem 2rem;
+      background: #1B263B;
+      color: white;
+      border: none;
+      border-radius: 60px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .name-input-group button:hover {
+      background: #2b3d5a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(27, 38, 59, 0.25);
+    }
+
+    .name-hint {
+      font-size: 0.75rem;
+      color: #8a7a64;
+      margin-top: 0.3rem;
+    }
+
+    /* === PHONG BÌ === */
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 680px;
+      perspective: 1200px;
+    }
+
+    .envelope {
+      position: absolute;
+      width: 100%;
+      max-width: 460px;
+      height: 580px;
+      background: #e8ddd0;
+      border-radius: 16px 16px 8px 8px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-style: preserve-3d;
+      border: 2px solid #d4c5b0;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: #e8ddd0;
+      border-radius: 16px 16px 0 0;
+      clip-path: polygon(0 0, 50% 65%, 100% 0);
+      border-bottom: 2px solid #d4c5b0;
+      transform-origin: top;
+      transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 3;
+    }
+
+    .envelope-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 380px;
+      background: #e8ddd0;
+      border-radius: 0 0 8px 8px;
+      border-top: 2px solid #d4c5b0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #8a7a64;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      gap: 4px;
+    }
+
+    .envelope-body i {
+      font-size: 2.8rem;
+      opacity: 0.3;
+      color: #b8a690;
+    }
+
+    /* === TÊN NGƯỜI NHẬN TRÊN PHONG BÌ === */
+    .recipient-name {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #1B263B;
+      background: rgba(252, 248, 240, 0.92);
+      padding: 0.4rem 1.5rem;
+      border-radius: 40px;
+      border: 2px solid #2c241a;
+      z-index: 4;
+      opacity: 0;
+      transition: all 0.6s ease;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      white-space: nowrap;
+      max-width: 80%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .recipient-name.show {
+      opacity: 1;
+      animation: nameAppear 0.8s ease-out;
+    }
+
+    @keyframes nameAppear {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5) rotate(-5deg);
+      }
+
+      60% {
+        transform: translateX(-50%) scale(1.1) rotate(1deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1) rotate(0deg);
+      }
+    }
+
+    /* === HIỆU ỨNG LẤP LÁNH CHO TÊN NGƯỜI NHẬN === */
+    .recipient-name.sparkle {
+      animation: sparkle 0.6s ease-out 3;
+    }
+
+    @keyframes sparkle {
+      0% {
+        box-shadow: 0 0 0 0 rgba(168, 218, 220, 0.4), 0 0 0 0 rgba(168, 218, 220, 0.2);
+      }
+
+      50% {
+        box-shadow: 0 0 20px 10px rgba(168, 218, 220, 0.6), 0 0 40px 20px rgba(168, 218, 220, 0.3);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(168, 218, 220, 0), 0 0 0 0 rgba(168, 218, 220, 0);
+      }
+    }
+
+    /* === THIỆP (DÙNG ẢNH) === */
+    .card {
+      position: relative;
+      width: 92%;
+      max-width: 430px;
+      z-index: 2;
+      opacity: 0;
+      transform: scale(0.7) rotate(-8deg) translateY(40px);
+      transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition-delay: 0.4s;
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 4px solid #2c241a;
+      border-radius: 8px;
+    }
+
+    /* Trạng thái mở phong bì */
+    .envelope-wrapper.open .envelope-flap {
+      transform: rotateX(-180deg);
+    }
+
+    .envelope-wrapper.open .card {
+      opacity: 1;
+      transform: scale(1) rotate(0deg) translateY(0);
+    }
+
+    .envelope-wrapper.open .envelope {
+      transform: scale(0.92) translateY(10px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    /* === NÚT MỞ THIỆP === */
+    .open-btn {
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: #1B263B;
+      color: #F8F9FA;
+      border: none;
+      padding: 0.8rem 2.2rem;
+      border-radius: 60px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 25px rgba(27, 38, 59, 0.3);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .open-btn:hover {
+      background: #2b3d5a;
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 12px 35px rgba(27, 38, 59, 0.4);
+    }
+
+    .open-btn:active {
+      transform: translateX(-50%) scale(0.96);
+    }
+
+    /* === HIỆU ỨNG LẤP LÁNH CHO TÊN TRONG THIỆP === */
+    .guest-name-glow {
+      display: inline-block;
+      transition: all 0.3s;
+    }
+
+    .guest-name-glow.sparkle-text {
+      animation: textSparkle 0.8s ease-out 3;
+    }
+
+    @keyframes textSparkle {
+      0% {
+        color: #1B263B;
+        text-shadow: 0 0 0 rgba(168, 218, 220, 0);
+      }
+
+      50% {
+        color: #A8DADC;
+        text-shadow: 0 0 20px rgba(168, 218, 220, 0.8), 0 0 40px rgba(168, 218, 220, 0.4);
+      }
+
+      100% {
+        color: #1B263B;
+        text-shadow: 0 0 0 rgba(168, 218, 220, 0);
+      }
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 480px) {
+      .envelope {
+        height: 520px;
+      }
+
+      .envelope-body {
+        height: 320px;
+      }
+
+      .envelope-flap {
+        height: 180px;
+      }
+
+      .open-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.75rem;
+        bottom: -16px;
+      }
+
+      .recipient-name {
+        font-size: 1rem;
+        padding: 0.3rem 1.2rem;
+        bottom: 80px;
+      }
+
+      .name-modal {
+        padding: 2rem 1.5rem;
+      }
+
+      .name-modal h2 {
+        font-size: 1.5rem;
+      }
+
+      .name-input-group {
+        flex-direction: column;
+      }
+
+      .name-input-group button {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MÀN HÌNH NHẬP TÊN -->
+  <div class="name-screen" id="nameScreen">
+    <div class="name-modal">
+      <div class="name-modal-icon">
+        <i class="fas fa-envelope-open-text"></i>
+      </div>
+      <h2>Bạn có thư! 💌</h2>
+      <p>Hãy nhập tên của bạn nhé</p>
+      <div class="name-input-group">
+        <input type="text" id="nameInput" placeholder="Nhập tên của bạn..." autofocus />
+        <button id="submitNameBtn">
+          <i class="fas fa-arrow-right"></i> Xác nhận
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="envelope-wrapper" id="envelopeWrapper">
+    <!-- PHONG BÌ -->
+    <div class="envelope" id="envelope">
+      <div class="envelope-flap" id="envelopeFlap"></div>
+      <div class="envelope-body">
+        <i class="fas fa-envelope"></i>
+        <span>❤️ Thư mời ❤️</span>
+        <span style="font-size: 0.6rem; opacity: 0.4;">mở ra để xem</span>
+      </div>
+    </div>
+
+    <!-- TÊN NGƯỜI NHẬN TRÊN PHONG BÌ -->
+    <div class="recipient-name" id="recipientName">[Tên người nhận]</div>
+
+    <!-- THIỆP (ẢNH) -->
+    <div class="card" id="inviteCard">
+      <img src="Minimalist Graduation Party Invitation .png" alt="Thiệp mời tốt nghiệp" />
+
+    </div>
+
+    <!-- NÚT MỞ THIỆP -->
+    <button class="open-btn" id="openBtn">
+      <i class="fas fa-envelope-open"></i>
+      Mở thiệp
+    </button>
+  </div>
+
+  <script>
+    (function () {
+      // DOM elements
+      const nameScreen = document.getElementById('nameScreen');
+      const nameInput = document.getElementById('nameInput');
+      const submitBtn = document.getElementById('submitNameBtn');
+      const recipientName = document.getElementById('recipientName');
+      const guestNameDisplay = document.getElementById('guestNameDisplay');
+      const wrapper = document.getElementById('envelopeWrapper');
+      const openBtn = document.getElementById('openBtn');
+
+      let guestName = '';
+      let isOpen = false;
+
+      // === XỬ LÝ NHẬP TÊN ===
+      function handleSubmitName() {
+        const name = nameInput.value.trim();
+
+        if (name !== '') {
+          guestName = name;
+        } else {
+          guestName = 'Bạn';
+        }
+
+        // Ẩn màn hình nhập tên
+        nameScreen.style.display = 'none';
+
+        // Cập nhật tên trên phong bì
+        recipientName.textContent = guestName;
+
+        // HIỆU ỨNG LẤP LÁNH - Tên trên phong bì
+        recipientName.classList.add('show');
+
+        // Thêm hiệu ứng sparkle sau khi tên xuất hiện
+        setTimeout(() => {
+          recipientName.classList.add('sparkle');
+        }, 300);
+
+        // Cập nhật tên trong thiệp (nếu có)
+        const nameElements = document.querySelectorAll('.guest-name');
+        nameElements.forEach(el => {
+          el.textContent = guestName;
+          // Thêm hiệu ứng lấp lánh cho tên trong thiệp
+          setTimeout(() => {
+            el.classList.add('sparkle-text');
+            setTimeout(() => {
+              el.classList.remove('sparkle-text');
+            }, 2400);
+          }, 500);
+        });
+
+        // Tự động mở thiệp sau 1.5 giây
+        setTimeout(() => {
+          if (!isOpen) {
+            wrapper.classList.add('open');
+            openBtn.innerHTML = '<i class="fas fa-check"></i> Đã mở';
+            openBtn.style.background = '#4a7c59';
+            isOpen = true;
+
+            // Ẩn tên trên phong bì khi tự động mở
+            recipientName.style.opacity = '0';
+            recipientName.style.transform = 'translateX(-50%) scale(0.8)';
+            recipientName.style.transition = 'all 0.4s ease';
+          }
+        }, 1800);
+      }
+
+      // Sự kiện click nút Submit
+      submitBtn.addEventListener('click', handleSubmitName);
+
+      // Sự kiện Enter trên input
+      nameInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          handleSubmitName();
+        }
+      });
+
+      // Tự động focus vào input
+      window.addEventListener('DOMContentLoaded', function () {
+        setTimeout(() => {
+          nameInput.focus();
+        }, 400);
+      });
+
+      // === NÚT MỞ/ĐÓNG THIỆP ===
+      openBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (!isOpen) {
+          wrapper.classList.add('open');
+          openBtn.innerHTML = '<i class="fas fa-check"></i> Đã mở';
+          openBtn.style.background = '#4a7c59';
+          isOpen = true;
+
+          // Ẩn tên trên phong bì khi mở thiệp
+          recipientName.style.opacity = '0';
+          recipientName.style.transform = 'translateX(-50%) scale(0.8)';
+          recipientName.style.transition = 'all 0.4s ease';
+
+        } else {
+          wrapper.classList.remove('open');
+          openBtn.innerHTML = '<i class="fas fa-envelope-open"></i> Mở thiệp';
+          openBtn.style.background = '#1B263B';
+          isOpen = false;
+
+          // Hiện lại tên trên phong bì khi đóng thiệp
+          recipientName.style.opacity = '1';
+          recipientName.style.transform = 'translateX(-50%) scale(1)';
+          recipientName.style.transition = 'all 0.4s ease';
+        }
+      });
+
+    })();
+  </script>
+
+</body>
+
+</html>
